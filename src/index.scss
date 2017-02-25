@@ -1,6 +1,27 @@
 @import '~material-design-lite/dist/material.blue_grey-pink.min.css';
 
+* {
+  box-sizing: border-box;
+}
+
 .center {
   text-align: center;
   padding: 10px;
+}
+
+.mdl-card {
+  background-size: cover;
+  color: #fff;
+  cursor: pointer;
+  height: 250px;
+}
+
+.mdl-card__title-text {
+  background-color: rgba(#fff, .5);
+  bottom: 0;
+  color: #fff;
+  left: 0;
+  padding: 15px;
+  position: absolute;
+  width: 100%;
 }
