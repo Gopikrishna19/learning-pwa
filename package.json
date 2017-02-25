@@ -6,9 +6,10 @@
   "scripts": {
     "build": "webpack",
     "eslint": "eslint . --ignore-path .gitignore",
-    "git:push-tags": "git push --all origin --follow-tags",
+    "git:commit": "git commit -a -m \"build and deploy\"",
     "git:deploy": "git subtree push --prefix dist origin gh-pages",
-    "postversion": "npm run build && npm run git:deploy && npm run git:push-tags",
+    "git:push-tags": "git push --all origin --follow-tags",
+    "postversion": "npm run build && npm run git:commit && npm run git:deploy && npm run git:push-tags",
     "start": "webpack-dev-server --env.dev"
   },
   "author": "Gopikrishna Sathyamurthy",
