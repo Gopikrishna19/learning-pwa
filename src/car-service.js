@@ -1,4 +1,5 @@
 import {getNodes} from './template';
+import {storeCars} from './client-storage';
 
 export const loadMoreRequest = () => {
 
@@ -9,7 +10,11 @@ export const loadMoreRequest = () => {
 
   return fetch(endPoint)
     .then(response => response.json())
-    .then(data => getNodes(...data.cars))
+    .then(data =>
+      storeCars(...data.cars).then(
+        () => getNodes(...data.cars)
+      )
+    )
     .then(nodes => {
 
       loader.remove();
