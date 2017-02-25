@@ -23,7 +23,7 @@
       </header>
 
       <main class="mdl-layout__content">
-        <div class="mdl-grid">
+        <div class="mdl-grid cars">
 
         </div>
 
@@ -35,10 +35,11 @@
       </main>
 
       <template id="car-card">
-        <div class="mdl-card mdl-cell mdl-cell--4col mdl-shadow--6dp">
+        <div class="mdl-card mdl-cell mdl-cell--4col mdl-shadow--6dp car-card">
           <div class="mdl-card__title">
             <span class="mdl-card__title-text">
-              {{title}} ($ {{price}})
+              <span class="title"></span>
+              <span class="price"></span>
             </span>
           </div>
         </div>
