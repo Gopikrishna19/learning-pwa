@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Car Deals</title>
+  <link href="index.css" rel="stylesheet"></head>
+  <body>
+    <div class="mdl-layout mdl-js-layout">
+
+      <header class="mdl-layout__header mdl-layout--fixed-header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Car Deals!</span>
+
+          <div class="mdl-layout-spacer"></div>
+
+          <div class="mdl-navigation">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+              Refresh
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="mdl-layout__content">
+        <div class="mdl-grid cars">
+
+        </div>
+
+        <div class="center">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            Show More
+          </button>
+        </div>
+      </main>
+
+      <template id="car-card">
+        <div class="mdl-card mdl-cell mdl-cell--4col mdl-shadow--6dp car-card">
+          <div class="mdl-card__title">
+            <span class="mdl-card__title-text">
+              <span class="title"></span>
+              <span class="price"></span>
+            </span>
+          </div>
+        </div>
+      </template>
+    </div>
+  <script type="text/javascript" src="index.js"></script></body>
+</html>
