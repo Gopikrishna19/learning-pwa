@@ -1,7 +1,9 @@
 import localForage from 'localforage';
 
+const increment = 3;
 const limit = 3;
-let lastItemId = null;
+let suffix = 0,
+  lastItemId = null;
 
 const instance = localForage.createInstance({
   name: 'cars'
@@ -9,13 +11,7 @@ const instance = localForage.createInstance({
 
 export const retrieveCars = () => instance.keys().then(keys => {
 
-  let index = keys.indexOf(lastItemId);
-
-  if (index === -1) {
-
-    index = keys.length;
-
-  }
+  const index = keys.indexOf(`${lastItemId}`);
 
   if (index === 0) {
 
@@ -23,7 +19,7 @@ export const retrieveCars = () => instance.keys().then(keys => {
 
   }
 
-  const limitedKeys = keys.slice(index - limit, index).reverse();
+  const limitedKeys = keys.slice().slice(index + 1, index + 1 + limit);
 
   return Promise.all(limitedKeys.map(key => instance.getItem(key)))
     .then(values => {
@@ -36,6 +32,18 @@ export const retrieveCars = () => instance.keys().then(keys => {
 
 });
 
-export const storeCars = (...cars) => Promise.all(
-  cars.map(car => instance.setItem(`${car.key}`, car.value))
-);
+export const storeCars = (...cars) => {
+
+  suffix += increment;
+
+  return Promise.all(
+    cars.map(car => {
+
+      const id = car.key + suffix;
+
+      return instance.setItem(`${id}`, Object.assign({}, car.value, {id}));
+
+    })
+  );
+
+};
