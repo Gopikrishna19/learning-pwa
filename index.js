@@ -93,23 +93,21 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMore
 const carsNode = document.querySelector('main .cars');
 const loaderNode = document.querySelector('main .first-load');
 
-const appendNodes = nodes => {
+const loadMore = () => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* retrieveCars */])().then(cars => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...cars)).then(nodes => {
 
   loaderNode.remove();
   nodes.forEach(node => carsNode.appendChild(node));
-};
+});
+/* unused harmony export loadMore */
+
 
 const loadMoreRequest = () => {
 
   const endPoint = './api/latest-deals.json';
 
-  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* storeCars */])(...data.cars).then(() => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...data.cars))).then(appendNodes);
+  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* storeCars */])(...data.cars)).then(loadMore);
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = loadMoreRequest;
-
-
-const loadMore = () => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* retrieveCars */])().then(cars => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...cars)).then(appendNodes);
-/* unused harmony export loadMore */
 
 
 /***/ }),
@@ -148,14 +146,14 @@ const retrieveCars = () => instance.keys().then(keys => {
 
     lastItemId = values[values.length - 1].id;
 
-    return values.map(value => ({ value }));
+    return values;
   });
 });
-/* harmony export (immutable) */ __webpack_exports__["b"] = retrieveCars;
+/* harmony export (immutable) */ __webpack_exports__["a"] = retrieveCars;
 
 
 const storeCars = (...cars) => Promise.all(cars.map(car => instance.setItem(`${car.key}`, car.value)));
-/* harmony export (immutable) */ __webpack_exports__["a"] = storeCars;
+/* harmony export (immutable) */ __webpack_exports__["b"] = storeCars;
 
 
 /***/ }),
@@ -175,7 +173,7 @@ const generateCard = car => {
   return clone;
 };
 
-const getNodes = (...cars) => cars.reduce((node, car) => node.concat(generateCard(car.value)), []);
+const getNodes = (...cars) => cars.reduce((node, car) => node.concat(generateCard(car)), []);
 /* harmony export (immutable) */ __webpack_exports__["a"] = getNodes;
 
 
