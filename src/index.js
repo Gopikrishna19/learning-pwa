@@ -1,4 +1,6 @@
-import {loadMoreRequest} from './car-service';
+import * as carService from './car-service';
 import './index.scss';
 
-loadMoreRequest();
+window.carService = carService;
+
+carService.loadMoreRequest();
