@@ -85,25 +85,31 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMore
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_storage__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_storage__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__template__ = __webpack_require__(3);
 
 
+
+const carsNode = document.querySelector('main .cars');
+const loaderNode = document.querySelector('main .first-load');
+
+const appendNodes = nodes => {
+
+  loaderNode.remove();
+  nodes.forEach(node => carsNode.appendChild(node));
+};
 
 const loadMoreRequest = () => {
 
-  const cars = document.querySelector('main .cars');
-  const loader = document.querySelector('main .first-load');
-
   const endPoint = '/api/latest-deals.json';
 
-  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__client_storage__["a" /* storeCars */])(...data.cars).then(() => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__template__["a" /* getNodes */])(...data.cars))).then(nodes => {
-
-    loader.remove();
-    nodes.forEach(node => cars.appendChild(node));
-  });
+  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* storeCars */])(...data.cars).then(() => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...data.cars))).then(appendNodes);
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = loadMoreRequest;
+
+
+const loadMore = () => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* retrieveCars */])().then(cars => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...cars)).then(appendNodes);
+/* unused harmony export loadMore */
 
 
 /***/ }),
@@ -115,9 +121,38 @@ const loadMoreRequest = () => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_localforage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_localforage__);
 
 
+const limit = 3;
+let lastItemId = null;
+
 const instance = __WEBPACK_IMPORTED_MODULE_0_localforage___default.a.createInstance({
   name: 'cars'
 });
+
+const retrieveCars = () => instance.keys().then(keys => {
+
+  let index = keys.indexOf(lastItemId);
+
+  if (index === -1) {
+
+    index = keys.length;
+  }
+
+  if (index === 0) {
+
+    return [];
+  }
+
+  const limitedKeys = keys.slice(index - limit, index).reverse();
+
+  return Promise.all(limitedKeys.map(key => instance.getItem(key))).then(values => {
+
+    lastItemId = values[values.length - 1].id;
+
+    return values.map(value => ({ value }));
+  });
+});
+/* harmony export (immutable) */ __webpack_exports__["b"] = retrieveCars;
+
 
 const storeCars = (...cars) => Promise.all(cars.map(car => instance.setItem(`${car.key}`, car.value)));
 /* harmony export (immutable) */ __webpack_exports__["a"] = storeCars;
