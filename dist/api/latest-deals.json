@@ -11,7 +11,7 @@
         "brand": "Chevrolet",
         "model": "Cobalt",
         "price": "5583",
-        "image": "/api/cars/chevy.jpg"
+        "image": "./api/cars/chevy.jpg"
       }
     },
     {
@@ -25,7 +25,7 @@
         "brand": "Buick",
         "model": "Reatta",
         "price": "14478",
-        "image": "/api/cars/buick.jpg"
+        "image": "./api/cars/buick.jpg"
       }
     },
     {
@@ -39,7 +39,7 @@
         "brand": "Pontiac",
         "model": "6000",
         "price": "6860",
-        "image": "/api/cars/pontiac.jpg"
+        "image": "./api/cars/pontiac.jpg"
       }
     }
   ]
