@@ -101,7 +101,7 @@ const appendNodes = nodes => {
 
 const loadMoreRequest = () => {
 
-  const endPoint = '/api/latest-deals.json';
+  const endPoint = './api/latest-deals.json';
 
   return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* storeCars */])(...data.cars).then(() => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...data.cars))).then(appendNodes);
 };
