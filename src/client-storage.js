@@ -24,7 +24,11 @@ export const retrieveCars = () => instance.keys().then(keys => {
   return Promise.all(limitedKeys.map(key => instance.getItem(key)))
     .then(values => {
 
-      lastItemId = values[values.length - 1].id;
+      if (values.length) {
+
+        lastItemId = values[values.length - 1].id;
+
+      }
 
       return values;
 
