@@ -47,7 +47,7 @@ module.exports = env => {
     config.devtool = 'source-map';
 
     config.devServer = {
-      contentBase: './',
+      contentBase: './dist',
       hot: true
     };
 
