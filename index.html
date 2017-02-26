@@ -38,7 +38,10 @@
         <div class="mdl-grid cars"></div>
 
         <div class="center">
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+          <button
+            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+            onclick="carService.loadMoreRequest()"
+          >
             Show More
           </button>
         </div>
@@ -49,7 +52,10 @@
           <div class="mdl-card__title">
             <span class="mdl-card__title-text">
               <span class="title"></span>
+
               <span class="price"></span>
+
+              <span class="id"></span>
             </span>
           </div>
         </div>
