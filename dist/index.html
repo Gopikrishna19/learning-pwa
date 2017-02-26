@@ -1,4 +1,4 @@
-<html>
+<html manifest="app.cache">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -15,7 +15,10 @@
           <div class="mdl-layout-spacer"></div>
 
           <div class="mdl-navigation">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+              onclick="services.refresh()"
+            >
               Refresh
             </button>
           </div>
@@ -40,7 +43,7 @@
         <div class="center">
           <button
             class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-            onclick="carService.loadMoreRequest()"
+            onclick="services.loadMoreRequest()"
           >
             Show More
           </button>

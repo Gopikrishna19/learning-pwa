@@ -78,16 +78,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.carService = __WEBPACK_IMPORTED_MODULE_0__car_service__;
+const refresh = () => {
 
-__WEBPACK_IMPORTED_MODULE_0__car_service__["loadMoreRequest"]();
+  if (window.applicationCache) {
+
+    window.applicationCache.update();
+  }
+};
+
+window.services = {
+  loadMoreRequest: __WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */],
+  refresh
+};
+
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */])();
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_storage__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__template__ = __webpack_require__(3);
 
@@ -96,21 +106,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const carsNode = document.querySelector('main .cars');
 const loaderNode = document.querySelector('main .first-load');
 
-const loadMore = () => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* retrieveCars */])().then(cars => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...cars)).then(nodes => {
+const loadMore = (source, status) => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["a" /* retrieveCars */])().then(cars => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template__["a" /* getNodes */])(...cars)).then(nodes => {
+
+  console.log(`%c${source}`, `color: ${status}`); // eslint-disable-line no-console
 
   loaderNode.remove();
   nodes.forEach(node => carsNode.appendChild(node));
 });
-/* harmony export (immutable) */ __webpack_exports__["loadMore"] = loadMore;
+/* unused harmony export loadMore */
 
 
 const loadMoreRequest = () => {
 
   const endPoint = './api/latest-deals.json';
 
-  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* storeCars */])(...data.cars)).then(loadMore);
+  return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* storeCars */])(...data.cars)).then(() => loadMore('Connection successful, serving live data', 'green')).catch(() => loadMore('Connection failed, serving cached data', 'red'));
 };
-/* harmony export (immutable) */ __webpack_exports__["loadMoreRequest"] = loadMoreRequest;
+/* harmony export (immutable) */ __webpack_exports__["a"] = loadMoreRequest;
 
 
 /***/ }),
@@ -144,7 +156,10 @@ const retrieveCars = () => instance.keys().then(keys => {
 
   return Promise.all(limitedKeys.map(key => instance.getItem(key))).then(values => {
 
-    lastItemId = values[values.length - 1].id;
+    if (values.length) {
+
+      lastItemId = values[values.length - 1].id;
+    }
 
     return values;
   });
