@@ -1,6 +1,19 @@
-import * as carService from './car-service';
+import {loadMoreRequest} from './car-service';
 import './index.scss';
 
-window.carService = carService;
+const refresh = () => {
 
-carService.loadMoreRequest();
+  if (window.applicationCache) {
+
+    window.applicationCache.update();
+
+  }
+
+};
+
+window.services = {
+  loadMoreRequest,
+  refresh
+};
+
+loadMoreRequest();
