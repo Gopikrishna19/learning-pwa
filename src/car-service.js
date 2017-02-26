@@ -13,7 +13,7 @@ const appendNodes = nodes => {
 
 export const loadMoreRequest = () => {
 
-  const endPoint = '/api/latest-deals.json';
+  const endPoint = './api/latest-deals.json';
 
   return fetch(endPoint)
     .then(response => response.json())
