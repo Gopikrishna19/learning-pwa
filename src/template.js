@@ -6,6 +6,7 @@ const generateCard = car => {
   clone.querySelector('.car-card').style.backgroundImage = `url(${car.image})`;
   clone.querySelector('.title').innerHTML = `${car.brand} ${car.model} ${car.year}`;
   clone.querySelector('.price').innerHTML = `$${car.price}`;
+  clone.querySelector('.id').innerHTML = `#${car.id}`;
 
   return clone;
 

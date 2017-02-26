@@ -14,14 +14,21 @@
   color: #fff;
   cursor: pointer;
   height: 250px;
-}
 
-.mdl-card__title-text {
-  background-color: rgba(#000, .5);
-  bottom: 0;
-  color: #fff;
-  left: 0;
-  padding: 15px;
-  position: absolute;
-  width: 100%;
+  .mdl-card__title-text {
+    background-color: rgba(#000, .5);
+    bottom: 0;
+    color: #fff;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    left: 0;
+    padding: 15px;
+    position: absolute;
+    width: 100%;
+  }
+
+  .id {
+    font-size: 10px;
+    width: 100%;
+  }
 }
