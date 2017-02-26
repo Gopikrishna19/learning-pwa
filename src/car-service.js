@@ -4,12 +4,14 @@ import {getNodes} from './template';
 const carsNode = document.querySelector('main .cars');
 const loaderNode = document.querySelector('main .first-load');
 
-const appendNodes = nodes => {
+export const loadMore = () => retrieveCars()
+  .then(cars => getNodes(...cars))
+  .then(nodes => {
 
-  loaderNode.remove();
-  nodes.forEach(node => carsNode.appendChild(node));
+    loaderNode.remove();
+    nodes.forEach(node => carsNode.appendChild(node));
 
-};
+  });
 
 export const loadMoreRequest = () => {
 
@@ -17,15 +19,7 @@ export const loadMoreRequest = () => {
 
   return fetch(endPoint)
     .then(response => response.json())
-    .then(data =>
-      storeCars(...data.cars).then(
-        () => getNodes(...data.cars)
-      )
-    )
-    .then(appendNodes);
+    .then(data => storeCars(...data.cars))
+    .then(loadMore);
 
 };
-
-export const loadMore = () => retrieveCars()
-  .then(cars => getNodes(...cars))
-  .then(appendNodes);

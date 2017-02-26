@@ -30,7 +30,7 @@ export const retrieveCars = () => instance.keys().then(keys => {
 
       lastItemId = values[values.length - 1].id;
 
-      return values.map(value => ({value}));
+      return values;
 
     });
 

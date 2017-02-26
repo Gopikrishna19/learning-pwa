@@ -13,6 +13,6 @@ const generateCard = car => {
 
 export const getNodes = (...cars) => cars.reduce(
   (node, car) =>
-    node.concat(generateCard(car.value)),
+    node.concat(generateCard(car)),
   []
 );
