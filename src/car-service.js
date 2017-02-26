@@ -1,10 +1,17 @@
+import {retrieveCars, storeCars} from './client-storage';
 import {getNodes} from './template';
-import {storeCars} from './client-storage';
+
+const carsNode = document.querySelector('main .cars');
+const loaderNode = document.querySelector('main .first-load');
+
+const appendNodes = nodes => {
+
+  loaderNode.remove();
+  nodes.forEach(node => carsNode.appendChild(node));
+
+};
 
 export const loadMoreRequest = () => {
-
-  const cars = document.querySelector('main .cars');
-  const loader = document.querySelector('main .first-load');
 
   const endPoint = '/api/latest-deals.json';
 
@@ -15,11 +22,10 @@ export const loadMoreRequest = () => {
         () => getNodes(...data.cars)
       )
     )
-    .then(nodes => {
-
-      loader.remove();
-      nodes.forEach(node => cars.appendChild(node));
-
-    });
+    .then(appendNodes);
 
 };
+
+export const loadMore = () => retrieveCars()
+  .then(cars => getNodes(...cars))
+  .then(appendNodes);
