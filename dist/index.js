@@ -78,13 +78,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */])();
+window.carService = __WEBPACK_IMPORTED_MODULE_0__car_service__;
+
+__WEBPACK_IMPORTED_MODULE_0__car_service__["loadMoreRequest"]();
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_storage__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__template__ = __webpack_require__(3);
 
@@ -98,7 +101,7 @@ const loadMore = () => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client
   loaderNode.remove();
   nodes.forEach(node => carsNode.appendChild(node));
 });
-/* unused harmony export loadMore */
+/* harmony export (immutable) */ __webpack_exports__["loadMore"] = loadMore;
 
 
 const loadMoreRequest = () => {
@@ -107,7 +110,7 @@ const loadMoreRequest = () => {
 
   return fetch(endPoint).then(response => response.json()).then(data => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__client_storage__["b" /* storeCars */])(...data.cars)).then(loadMore);
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = loadMoreRequest;
+/* harmony export (immutable) */ __webpack_exports__["loadMoreRequest"] = loadMoreRequest;
 
 
 /***/ }),
@@ -119,8 +122,10 @@ const loadMoreRequest = () => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_localforage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_localforage__);
 
 
+const increment = 3;
 const limit = 3;
-let lastItemId = null;
+let suffix = 0,
+    lastItemId = null;
 
 const instance = __WEBPACK_IMPORTED_MODULE_0_localforage___default.a.createInstance({
   name: 'cars'
@@ -128,19 +133,14 @@ const instance = __WEBPACK_IMPORTED_MODULE_0_localforage___default.a.createInsta
 
 const retrieveCars = () => instance.keys().then(keys => {
 
-  let index = keys.indexOf(lastItemId);
-
-  if (index === -1) {
-
-    index = keys.length;
-  }
+  const index = keys.indexOf(`${lastItemId}`);
 
   if (index === 0) {
 
     return [];
   }
 
-  const limitedKeys = keys.slice(index - limit, index).reverse();
+  const limitedKeys = keys.slice().slice(index + 1, index + 1 + limit);
 
   return Promise.all(limitedKeys.map(key => instance.getItem(key))).then(values => {
 
@@ -152,7 +152,17 @@ const retrieveCars = () => instance.keys().then(keys => {
 /* harmony export (immutable) */ __webpack_exports__["a"] = retrieveCars;
 
 
-const storeCars = (...cars) => Promise.all(cars.map(car => instance.setItem(`${car.key}`, car.value)));
+const storeCars = (...cars) => {
+
+  suffix += increment;
+
+  return Promise.all(cars.map(car => {
+
+    const id = car.key + suffix;
+
+    return instance.setItem(`${id}`, Object.assign({}, car.value, { id }));
+  }));
+};
 /* harmony export (immutable) */ __webpack_exports__["b"] = storeCars;
 
 
@@ -169,6 +179,7 @@ const generateCard = car => {
   clone.querySelector('.car-card').style.backgroundImage = `url(${car.image})`;
   clone.querySelector('.title').innerHTML = `${car.brand} ${car.model} ${car.year}`;
   clone.querySelector('.price').innerHTML = `$${car.price}`;
+  clone.querySelector('.id').innerHTML = `#${car.id}`;
 
   return clone;
 };
