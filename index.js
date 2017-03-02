@@ -83,17 +83,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const refresh = () => {
-
-  if (window.applicationCache) {
-
-    window.applicationCache.update();
-  }
-};
-
 window.services = {
-  loadMoreRequest: __WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */],
-  refresh
+  loadMoreRequest: __WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */]
 };
 
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */])();
