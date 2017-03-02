@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,8 +73,13 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__car_service__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_scss__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__index_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__worker_reg__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_file_loader_name_worker_js_worker__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_file_loader_name_worker_js_worker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_file_loader_name_worker_js_worker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_scss__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__index_scss__);
+
+
 
 
 
@@ -92,6 +97,7 @@ window.services = {
 };
 
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__car_service__["a" /* loadMoreRequest */])();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__worker_reg__["a" /* registerWorker */])();
 
 /***/ }),
 /* 1 */
@@ -130,7 +136,7 @@ const loadMoreRequest = () => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_localforage__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_localforage__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_localforage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_localforage__);
 
 
@@ -205,12 +211,68 @@ const getNodes = (...cars) => cars.reduce((node, car) => node.concat(generateCar
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* eslint-disable no-console */
+/* eslint-disable complexity */
+const log = msg => console.log(`%c${msg}`, '{color: #f80}');
+
+const registerWorker = () => {
+
+        if ('serviceWorker' in navigator) {
+
+                navigator.serviceWorker.register('worker.js').then(reg => {
+
+                        let serviceWorker;
+
+                        if (reg.installing) {
+
+                                log('Installing');
+                                serviceWorker = reg.installing;
+                        } else if (reg.waiting) {
+
+                                log('Waiting');
+                                serviceWorker = reg.waiting;
+                        } else if (reg.active) {
+
+                                log('Activated');
+                                serviceWorker = reg.active;
+                        }
+
+                        if (serviceWorker) {
+
+                                serviceWorker.addEventListener('statechange', () => log('State changed'));
+                        }
+
+                        reg.addEventListener('updatefound', () => {
+
+                                reg.installing.addEventListener('statechange', () => log('Installing new worker'));
+
+                                log('Found new worker');
+                        });
+                });
+
+                navigator.serviceWorker.addEventListener('controllerchange', () => log('Changing controller'));
+        }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = registerWorker;
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 5 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "worker.js";
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -2526,10 +2588,10 @@ module.exports = localforage_js;
 
 },{"3":3}]},{},[4])(4)
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 var g;
@@ -2556,7 +2618,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(0);
