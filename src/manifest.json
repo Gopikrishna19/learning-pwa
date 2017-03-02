@@ -1,0 +1,10 @@
+{
+  "name": "The Best Car Deals",
+  "short_name": "Car Deals",
+  "theme_color": "#607d8b",
+  "background_color": "#607d8b",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}
