@@ -1,6 +1,6 @@
 {
   "name": "learning-progressive",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Learning to write progressive web applications",
   "main": "index.js",
   "scripts": {
