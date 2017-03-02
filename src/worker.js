@@ -26,7 +26,11 @@ const getCache = request => {
 const fetchAndCache = request => fetch(request)
   .then(response => {
 
-    caches.open(getCache(request)).then(cache => cache.put(request, response));
+    caches.open(getCache(request)).then(cache => {
+
+      cache.put(request, response).catch(() => {});
+
+    });
 
     return response.clone();
 
