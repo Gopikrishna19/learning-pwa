@@ -6,10 +6,11 @@ const files = [
   'index.html'
 ];
 
-self.addEventListener('install', () => {
+self.addEventListener('install', event => {
 
-  caches.open(CAR_DEALS_CACHE)
-    .then(cache => cache.addAll(files));
+  event.waitUntil(
+    caches.open(CAR_DEALS_CACHE)
+      .then(cache => cache.addAll(files))
+  );
 
 });
-
