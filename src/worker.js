@@ -1,8 +1,9 @@
 const CAR_DEALS_CACHE = 'car.deals.1.0';
+const DEALS_PATH = '/api/latest-deals.json';
 const files = [
+  './',
   'index.css',
   'index.js',
-  './',
   'index.html'
 ];
 
@@ -29,5 +30,19 @@ self.addEventListener('activate', event => {
           .filter(promise => promise)
       ))
   );
+
+});
+
+self.addEventListener('fetch', event => {
+
+  const url = new URL(event.request.url);
+  const path = url.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+
+  if (path === DEALS_PATH || file === 'worker.js') {
+
+    event.respondWith(fetch(event.request));
+
+  }
 
 });
