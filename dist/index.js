@@ -210,7 +210,7 @@ const getNodes = (...cars) => cars.reduce((node, car) => node.concat(generateCar
 "use strict";
 /* eslint-disable no-console */
 /* eslint-disable complexity */
-const log = msg => console.log(`%c${msg}`, '{color: #f80}');
+const log = msg => console.log(`%c${msg}`, 'color: #f80');
 
 const registerWorker = () => {
 
