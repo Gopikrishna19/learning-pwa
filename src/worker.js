@@ -32,6 +32,9 @@ const fetchAndCache = request => fetch(request)
 
   });
 
+const cacheFirst = request => caches.match(request)
+  .then(response => response || fetchAndCache(request));
+
 const networkFirst = request => fetchAndCache(request)
   .catch(() => caches.match(request));
 
@@ -75,6 +78,10 @@ self.addEventListener('fetch', event => {
   } else if (/\.jpg$/.test(path)) {
 
     event.respondWith(networkFirst(request));
+
+  } else {
+
+    event.respondWith(cacheFirst(request));
 
   }
 
