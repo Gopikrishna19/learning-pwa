@@ -8,6 +8,8 @@ const files = [
 
 self.addEventListener('install', event => {
 
+  self.skipWaiting();
+
   event.waitUntil(
     caches.open(CAR_DEALS_CACHE)
       .then(cache => cache.addAll(files))
