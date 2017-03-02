@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable complexity */
-const log = msg => console.log(`%c${msg}`, '{color: #f80}');
+const log = msg => console.log(`%c${msg}`, 'color: #f80');
 
 export const registerWorker = () => {
 
